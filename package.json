@@ -1,7 +1,7 @@
 {
-  "name": "typhonjs-npm-script-runner",
+  "name": "typhonjs-npm-scripts-runner",
   "version": "0.0.1",
-  "homepage": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner",
+  "homepage": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-runner",
   "description": "Provides an NPM module and script which will load a JSON file searching for an Array entry then executes the scripts.",
   "license": "MPL-2.0",
   "author": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner.git"
+    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-runner.git"
   },
   "maintainers": [
     {
@@ -42,6 +42,6 @@
   ],
   "directories": {},
   "bugs": {
-    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner/issues"
+    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-scripts-runner/issues"
   }
 }
