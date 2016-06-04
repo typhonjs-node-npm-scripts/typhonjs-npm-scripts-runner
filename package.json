@@ -1,0 +1,47 @@
+{
+  "name": "typhonjs-npm-script-runner",
+  "version": "0.0.1",
+  "homepage": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner",
+  "description": "Provides an NPM module and script which will load a JSON file searching for an Array entry then executes the scripts.",
+  "license": "MPL-2.0",
+  "author": {
+    "name": "Mike Leahy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner.git"
+  },
+  "maintainers": [
+    {
+      "name": "Mike Leahy",
+      "email": "support@js.typhonrt.org"
+    }
+  ],
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "strip-json-comments": "^2.0.0"
+  },
+  "devDependencies": {
+    "typhonjs-config-eslint": "^0.4.0"
+  },
+  "keywords": [
+    "typhonjs",
+    "node",
+    "npm",
+    "script",
+    "runner"
+  ],
+  "scripts": {
+    "test": "node ./test/scripts/test.js"
+  },
+  "main": "src/runner.js",
+  "files": [
+    "scripts",
+    "src",
+    "AUTHORS.md"
+  ],
+  "directories": {},
+  "bugs": {
+    "url": "https://github.com/typhonjs-node-npm-scripts/typhonjs-npm-script-runner/issues"
+  }
+}
