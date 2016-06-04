@@ -18,12 +18,12 @@ module.exports.run = function(filePath, scriptEntry)
 {
    if (typeof filePath !== 'string')
    {
-      throw new TypeError('typhonjs-npm-script-runner error: filePath is not a `string`.');
+      throw new TypeError('typhonjs-npm-scripts-runner error: filePath is not a `string`.');
    }
 
    if (typeof scriptEntry !== 'string')
    {
-      throw new TypeError('typhonjs-npm-script-runner error: scriptEntry is not a `string`.');
+      throw new TypeError('typhonjs-npm-scripts-runner error: scriptEntry is not a `string`.');
    }
 
    var relativeFilePath = path.resolve(process.cwd(), filePath);
@@ -39,7 +39,7 @@ module.exports.run = function(filePath, scriptEntry)
    }
    catch (err)
    {
-      throw new Error("typhonjs-npm-script-runner error: " + err);
+      throw new Error("typhonjs-npm-scripts-runner error: " + err);
    }
 
    // Load `filePath` as JSON stripping any comments.
@@ -52,7 +52,7 @@ module.exports.run = function(filePath, scriptEntry)
    }
    catch (err)
    {
-      throw new Error("typhonjs-npm-script-runner error: " + err);
+      throw new Error("typhonjs-npm-scripts-runner error: " + err);
    }
 
    var entries = scriptEntry.split('.');
@@ -70,7 +70,7 @@ module.exports.run = function(filePath, scriptEntry)
          if (typeof objectWalker[entries[cntr]] !== 'object')
          {
             throw new Error(
-             'typhonjs-npm-script-runner error: `' + entryWalker + '` entry is not an object or is missing in `'
+             'typhonjs-npm-scripts-runner error: `' + entryWalker + '` entry is not an object or is missing in `'
              + filePath + '`.');
          }
       }
@@ -79,7 +79,7 @@ module.exports.run = function(filePath, scriptEntry)
          if (!Array.isArray(objectWalker[entries[cntr]]))
          {
             throw new Error(
-             'typhonjs-npm-script-runner error: `' + entryWalker + '` entry is not an Array or is missing in `'
+             'typhonjs-npm-scripts-runner error: `' + entryWalker + '` entry is not an Array or is missing in `'
              + filePath + '`.');
          }
       }
@@ -94,7 +94,7 @@ module.exports.run = function(filePath, scriptEntry)
       if (typeof objectWalker[cntr] !== 'string')
       {
          throw new Error(
-          'typhonjs-npm-script-runner error: `' + entryWalker + '` array entry `' +objectWalker[cntr]
+          'typhonjs-npm-scripts-runner error: `' + entryWalker + '` array entry `' +objectWalker[cntr]
            + '` at index `' + cntr +'` is not a `string` in `' + filePath + '`.');
       }
    }
@@ -106,7 +106,7 @@ module.exports.run = function(filePath, scriptEntry)
       var exec = objectWalker[cntr];
 
       // Notify what command is being executed then execute it.
-      process.stdout.write('typhonjs-npm-script-runner executing: ' + exec + '\n');
+      process.stdout.write('typhonjs-npm-scripts-runner executing: ' + exec + '\n');
       cp.execSync(exec, { stdio: 'inherit' });
    }
 };
