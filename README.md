@@ -56,16 +56,16 @@ Given the above data file here are the entries in `package.json` to run them:
 
 ```
   "scripts": {
-    "copy": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js .scriptdata copy.files.scripts",
-    "runmult": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js .scriptdata run.scripts"
+    "copy": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js .scriptdata copy.files.scripts '<optional custom message>'",
+    "runmult": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js .scriptdata run.scripts '<optional custom message>'"
   },
 ```
 
-For programmatic usage see the following example:
+For programmatic usage see the following example; you may include a 3rd string parameter for a custom message:
 ```
 var runner = require('typhonjs-npm-scripts-runner');
 
-runner.run('.scriptdata', 'copy.files.scripts');
+runner.run('.scriptdata', 'copy.files.scripts', '<optional custom message>');
 ```
 
 Please note that you can add comments to the script JSON data file. 
