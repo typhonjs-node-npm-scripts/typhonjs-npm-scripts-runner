@@ -12,18 +12,21 @@ var stripJsonComments = require('strip-json-comments');
  * ```
  * (string) filePath - The path to a JSON formatted file.
  * (string) scriptEntry - A entry path separated by `.` relative to the root of the JSON file that is an `Array`.
+ * (string) messagePrepend - An optional message to prepend instead of the default: `typhonjs-npm-scripts-runner`.
  * ```
  */
-module.exports.run = function(filePath, scriptEntry)
+module.exports.run = function(filePath, scriptEntry, messagePrepend)
 {
+   messagePrepend = typeof messagePrepend === 'string' ? messagePrepend : 'typhonjs-npm-scripts-runner';
+
    if (typeof filePath !== 'string')
    {
-      throw new TypeError('typhonjs-npm-scripts-runner error: filePath is not a `string`.');
+      throw new TypeError(messagePrepend + ' error: filePath is not a `string`.');
    }
 
    if (typeof scriptEntry !== 'string')
    {
-      throw new TypeError('typhonjs-npm-scripts-runner error: scriptEntry is not a `string`.');
+      throw new TypeError(messagePrepend + ' error: scriptEntry is not a `string`.');
    }
 
    var relativeFilePath = path.resolve(process.cwd(), filePath);
@@ -39,7 +42,7 @@ module.exports.run = function(filePath, scriptEntry)
    }
    catch (err)
    {
-      throw new Error("typhonjs-npm-scripts-runner error: " + err);
+      throw new Error(messagePrepend + ' error: ' + err);
    }
 
    // Load `filePath` as JSON stripping any comments.
@@ -52,7 +55,7 @@ module.exports.run = function(filePath, scriptEntry)
    }
    catch (err)
    {
-      throw new Error("typhonjs-npm-scripts-runner error: " + err);
+      throw new Error(messagePrepend + ' error: ' + err);
    }
 
    var entries = scriptEntry.split('.');
@@ -69,8 +72,7 @@ module.exports.run = function(filePath, scriptEntry)
       {
          if (typeof objectWalker[entries[cntr]] !== 'object')
          {
-            throw new Error(
-             'typhonjs-npm-scripts-runner error: `' + entryWalker + '` entry is not an object or is missing in `'
+            throw new Error(messagePrepend + ' error: `' + entryWalker + '` entry is not an object or is missing in `'
              + filePath + '`.');
          }
       }
@@ -78,8 +80,7 @@ module.exports.run = function(filePath, scriptEntry)
       {
          if (!Array.isArray(objectWalker[entries[cntr]]))
          {
-            throw new Error(
-             'typhonjs-npm-scripts-runner error: `' + entryWalker + '` entry is not an Array or is missing in `'
+            throw new Error(messagePrepend + ' error: `' + entryWalker + '` entry is not an Array or is missing in `'
              + filePath + '`.');
          }
       }
@@ -93,8 +94,7 @@ module.exports.run = function(filePath, scriptEntry)
       /* istanbul ignore if */
       if (typeof objectWalker[cntr] !== 'string')
       {
-         throw new Error(
-          'typhonjs-npm-scripts-runner error: `' + entryWalker + '` array entry `' +objectWalker[cntr]
+         throw new Error(messagePrepend + ' error: `' + entryWalker + '` array entry `' +objectWalker[cntr]
            + '` at index `' + cntr +'` is not a `string` in `' + filePath + '`.');
       }
    }
@@ -106,7 +106,7 @@ module.exports.run = function(filePath, scriptEntry)
       var exec = objectWalker[cntr];
 
       // Notify what command is being executed then execute it.
-      process.stdout.write('typhonjs-npm-scripts-runner executing: ' + exec + '\n');
+      process.stdout.write(messagePrepend + ' executing: ' + exec + '\n');
       cp.execSync(exec, { stdio: 'inherit' });
    }
 };

@@ -22,4 +22,4 @@ if (typeof process.argv[3] !== 'string')
    throw new TypeError('typhonjs-npm-scripts-runner error: argument `script entry` is missing or not a `string`.');
 }
 
-runner.run(process.argv[2], process.argv[3]);
+runner.run(process.argv[2], process.argv[3], process.argv[4]);

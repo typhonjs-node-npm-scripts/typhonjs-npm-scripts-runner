@@ -63,4 +63,7 @@ catch (err)
    throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
 }
 
+// Test the message prepend
+runner.run('./test/data/.scriptrc', 'test.data.scripts', 'A custom message -');
+
 fs.emptyDirSync('./test/fixture');
