@@ -18,7 +18,7 @@ To configure the script runner provide this entry in `package.json` scripts entr
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-runner": "^0.1.0"
+    "typhonjs-npm-scripts-runner": "^0.3.0"
   },
   "scripts": {
     "runme": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js <file path> <script entry>",
