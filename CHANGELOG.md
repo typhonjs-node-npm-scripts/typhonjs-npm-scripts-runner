@@ -1,3 +1,7 @@
+## 0.4.0 (2017-02-25)
+- Added multiple script file loading via optional array of file path entries and require loading of file paths 
+  ending in `.js`. 
+
 ## 0.3.0 (2017-02-18)
 - Upgraded fs-extra to ^2.0.0
 
