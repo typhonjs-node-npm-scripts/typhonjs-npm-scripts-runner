@@ -8,7 +8,9 @@
 [![Build Status](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-runner.svg?branch=master)](https://travis-ci.org/typhonjs-node-npm-scripts/typhonjs-npm-scripts-runner)
 [![Dependency Status](https://www.versioneye.com/user/projects/57525a757757a00041b3a222/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57525a757757a00041b3a222)
 
-Provides an NPM module and script which will load a JSON file searching for an Array entry then executes commands by `child_process->execSync`. 
+Provides an NPM module and script which will require a CJS formatted `.js` file or treat all other files as JSON
+in addition to stripping any comments. Once the file is loaded an search for an array object entry occurs and if found
+all entries in the array are executed by `child_process->execSync`.  
 
 For a comprehensive ES6 build / testing / publishing NPM module please see [typhonjs-npm-build-test](https://www.npmjs.com/package/typhonjs-npm-build-test) as it combines this module along with transpiling ES6 sources with Babel, pre-publish script detection, ESDoc dependencies, testing with Mocha / Istanbul and an Istanbul instrumentation hook for JSPM / SystemJS tests. For a full listing of all TyphonJS NPM script modules available please see [typhonjs-node-npm-scripts](https://github.com/typhonjs-node-npm-scripts) organization on GitHub.
 
@@ -18,7 +20,7 @@ To configure the script runner provide this entry in `package.json` scripts entr
 
 ```
   "devDependencies": {
-    "typhonjs-npm-scripts-runner": "^0.3.0"
+    "typhonjs-npm-scripts-runner": "^0.4.0"
   },
   "scripts": {
     "runme": "node ./node_modules/typhonjs-npm-scripts-runner/scripts/runner.js <file path> <script entry>",
