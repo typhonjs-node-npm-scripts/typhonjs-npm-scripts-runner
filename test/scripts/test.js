@@ -5,6 +5,7 @@
  */
 
 var fs = require('fs-extra');
+var cp = require('child_process');
 
 fs.emptyDirSync('./test/fixture');
 
@@ -61,24 +62,7 @@ console.log('Testing bare script treated as JSON:');
 runner.run('./test/data/.scriptrc', 'test.data.scripts');
 
 // Verify that two files were copied.
-try
-{
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-}
-catch (err)
-{
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
-}
+verifyOutput();
 
 // -------------------------
 
@@ -87,7 +71,8 @@ console.log('\nTesting bare script message prepend:');
 
 runner.run('./test/data/.scriptrc', 'test.data.scripts', 'A custom message -');
 
-fs.emptyDirSync('./test/fixture');
+// Verify that two files were copied.
+verifyOutput();
 
 // -------------------------
 
@@ -98,24 +83,7 @@ console.log('\nTesting bad file array first entry:');
 runner.run(['./test/data/.badfile1', './test/data/.scriptrc', './test/data/.badfile2'], 'test.data.scripts');
 
 // Verify that two files were copied.
-try
-{
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-}
-catch (err)
-{
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
-}
+verifyOutput();
 
 // -------------------------
 
@@ -124,7 +92,8 @@ console.log('\nTesting message prepend:');
 
 runner.run('./test/data/.scriptrc', 'test.data.scripts', 'A custom message -');
 
-fs.emptyDirSync('./test/fixture');
+// Verify that two files were copied.
+verifyOutput();
 
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -135,24 +104,7 @@ console.log('\nTesting CJS scriptrc.js require:');
 runner.run('./test/data/.scriptrc.js', 'test.data.scripts');
 
 // Verify that two files were copied.
-try
-{
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-}
-catch (err)
-{
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
-}
+verifyOutput();
 
 // -------------------------
 
@@ -161,7 +113,8 @@ console.log('\nTesting CJS scriptrc.js require - message prepend:');
 
 runner.run('./test/data/.scriptrc.js', 'test.data.scripts', 'A custom message -');
 
-fs.emptyDirSync('./test/fixture');
+// Verify that two files were copied.
+verifyOutput();
 
 // -------------------------
 
@@ -172,24 +125,7 @@ console.log('\nTesting CJS bad first entry for file array:');
 runner.run(['./test/data/.badfile1.js', './test/data/.scriptrc.js', './test/data/.badfile2.js'], 'test.data.scripts');
 
 // Verify that two files were copied.
-try
-{
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-}
-catch (err)
-{
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
-}
+verifyOutput();
 
 // -------------------------
 
@@ -198,7 +134,8 @@ console.log('\nTesting CJS prepend message:');
 
 runner.run('./test/data/.scriptrc.js', 'test.data.scripts', 'A custom message -');
 
-fs.emptyDirSync('./test/fixture');
+// Verify that two files were copied.
+verifyOutput();
 
 // -------------------------
 
@@ -209,30 +146,7 @@ console.log('\nTesting JSON file array only executes first matching script:');
 runner.run(['./test/data/.scriptrc', './test/data/.scriptrc2'], 'test.data.scripts');
 
 // Verify that two files were copied and that 'scriptrc2' is not executed.
-try
-{
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (fs.existsSync('./test/fixture/SHOULD_NOT_EXIST.js'))
-   {
-      throw new Error('`./test/fixture/SHOULD_NOT_EXIST.js` is was copied / scriptrc2 was incorrectly executed.');
-   }
-}
-catch (err)
-{
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
-}
+verifyOutput();
 
 // -------------------------
 
@@ -243,27 +157,88 @@ console.log('\nTesting CJS file array only executes first matching script:');
 runner.run(['./test/data/.scriptrc.js', './test/data/.scriptrc2'], 'test.data.scripts');
 
 // Verify that two files were copied and that 'scriptrc2' is not executed.
-try
+verifyOutput();
+
+// ------------------------------------------------------------------------------------------------------------------
+
+// Test running 'test-script'
+process.stdout.write('\nTesting NPM script execution\n');
+
+// Notify what command is being executed then execute it.
+var exec = 'npm run test-script';
+process.stdout.write('\nexecuting: ' + exec + '\n');
+cp.execSync(exec, { stdio: 'inherit' });
+
+// Verify that two files were copied.
+verifyOutput();
+
+// -------------------------
+
+// Notify what command is being executed then execute it.
+exec = 'npm run test-script-bad';
+process.stdout.write('\nexecuting: ' + exec + '\n');
+
+thrown = false;
+try { cp.execSync(exec, { stdio: 'inherit' }); }
+catch(err) { thrown = true; }
+if (!thrown)
 {
-   // Verify that `./test/fixture/empty2.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (!fs.statSync('./test/fixture/empty2.js').isFile())
-   {
-      throw new Error('`./test/fixture/empty2.js` is not a file.');
-   }
-
-   // Verify that `./test/fixture/empty3.json` exists.
-   if (fs.existsSync('./test/fixture/SHOULD_NOT_EXIST.js'))
-   {
-      throw new Error('`./test/fixture/SHOULD_NOT_EXIST.js` is was copied / scriptrc2 was incorrectly executed.');
-   }
+   throw new Error("typhonjs-npm-scripts-runner test error: 'npm run test-script-bad' does not throw error.");
 }
-catch (err)
+
+// -------------------------
+
+// Notify what command is being executed then execute it.
+exec = 'npm run test-script-js';
+process.stdout.write('\nexecuting: ' + exec + '\n');
+cp.execSync(exec, { stdio: 'inherit' });
+
+// Verify that two files were copied.
+verifyOutput();
+
+// -------------------------
+
+// Notify what command is being executed then execute it.
+exec = 'npm run test-script-message';
+process.stdout.write('\nexecuting: ' + exec + '\n');
+cp.execSync(exec, { stdio: 'inherit' });
+
+// Verify that two files were copied.
+verifyOutput();
+
+// ------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Verifies testing output in './test/fixture'
+ */
+function verifyOutput()
 {
-   throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
+   try
+   {
+      // Verify that `./test/fixture/empty2.json` exists.
+      if (!fs.statSync('./test/fixture/empty2.js').isFile())
+      {
+         throw new Error('`./test/fixture/empty2.js` is not a file.');
+      }
+
+      // Verify that `./test/fixture/empty3.json` exists.
+      if (!fs.statSync('./test/fixture/empty2.js').isFile())
+      {
+         throw new Error('`./test/fixture/empty2.js` is not a file.');
+      }
+
+      // Verify that `./test/fixture/empty3.json` exists.
+      if (fs.existsSync('./test/fixture/SHOULD_NOT_EXIST.js'))
+      {
+         throw new Error('`./test/fixture/SHOULD_NOT_EXIST.js` is was copied / scriptrc2 was incorrectly executed.');
+      }
+   }
+   catch (err)
+   {
+      throw new Error('typhonjs-npm-scripts-runner test error: ' + err);
+   }
+   finally
+   {
+      fs.emptyDirSync('./test/fixture');
+   }
 }

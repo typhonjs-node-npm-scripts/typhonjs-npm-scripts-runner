@@ -5,7 +5,7 @@
   "description": "Provides an NPM module and script which will load a JSON file searching for an Array entry then executes the scripts.",
   "license": "MPL-2.0",
   "author": {
-    "name": "Mike Leahy"
+    "name": "typhonrt"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   },
   "maintainers": [
     {
-      "name": "Mike Leahy",
+      "name": "typhonrt",
       "email": "support@js.typhonrt.org"
     }
   ],
@@ -32,7 +32,11 @@
     "runner"
   ],
   "scripts": {
-    "test": "node ./test/scripts/test.js"
+    "test": "node ./test/scripts/test.js",
+    "test-script": "node ./scripts/runner.js ./test/data/.scriptrc test.data.scripts",
+    "test-script-bad": "node ./scripts/runner.js ./test/data/.badfile test.data.scripts",
+    "test-script-js": "node ./scripts/runner.js ./test/data/.scriptrc.js test.data.scripts",
+    "test-script-message": "node ./scripts/runner.js ./test/data/.scriptrc test.data.scripts 'A custom message -'"
   },
   "main": "src/runner.js",
   "files": [
