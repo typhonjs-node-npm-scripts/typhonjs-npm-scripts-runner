@@ -1,0 +1,20 @@
+/**
+ * Script runner config file should be JSON formatted.
+ *
+ * You can provide comments in script runner data files.
+ *
+ * The entry below is used in testing and used in `./test/scripts/test.js` to determine file array execution. This
+ * config file should never be reached as part of a file array where a previous file satisfies running the script.
+ */
+{
+   "test":
+   {
+      "data":
+      {
+         "scripts":
+         [
+            "cp ./test/data/empty.js ./test/fixture/SHOULD_NOT_EXIST.js"
+         ]
+      }
+   }
+}
