@@ -179,8 +179,12 @@ exec = 'npm run test-script-bad';
 process.stdout.write('\nexecuting: ' + exec + '\n');
 
 thrown = false;
-try { cp.execSync(exec, { stdio: 'inherit' }); }
-catch(err) { thrown = true; }
+try { cp.execSync(exec, { stdio: ['ignore', 'ignore', 'ignore'] }); }
+catch(err)
+{
+   process.stdout.write('Successfully failed / threw error.\n');
+   thrown = true;
+}
 if (!thrown)
 {
    throw new Error("typhonjs-npm-scripts-runner test error: 'npm run test-script-bad' does not throw error.");
